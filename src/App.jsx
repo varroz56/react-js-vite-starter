@@ -8,10 +8,14 @@ const App = () => {
     setIsDisabled(true);
   };
   return (
-    <div>
-      <h1>My App</h1>
+    <div className="container text-center w-50 mt-52">
+      <h1 className="text-4xl">My App</h1>
 
-      <button onClick={buttonClicked} disabled={isDisabled}>
+      <button
+        className="btn btn-blue border-2 bg-slate-500 text-yellow-100 p-5 m-2 disabled:bg-red-500"
+        onClick={buttonClicked}
+        disabled={isDisabled}
+      >
         {buttonMessage}
       </button>
     </div>

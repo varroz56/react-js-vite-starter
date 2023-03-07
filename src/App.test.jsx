@@ -11,11 +11,15 @@ describe("App component", () => {
     render(<App />);
     const headingElement = screen.getByText(/my app/i);
     expect(headingElement).toBeInTheDocument();
+    expect(headingElement).toHaveClass("text-4xl");
   });
-  test("renders click me button", () => {
+  test("renders click me button", async () => {
     render(<App />);
     const clickMeButtonElement = screen.getByText(/Click me!/i);
     expect(clickMeButtonElement).toBeInTheDocument();
+    expect(clickMeButtonElement).toHaveClass(
+      "btn btn-blue border-2 bg-slate-500 text-yellow-100 p-5 m-2 disabled:bg-red-500"
+    );
   });
   test("renders click me button correctly after click", async () => {
     render(<App />);
