@@ -1,31 +1,46 @@
-import { test, expect, describe } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import React from "react";
+import "@testing-library/jest-dom";
+import { BrowserRouter, MemoryRouter } from "react-router-dom";
+
 import App from "./App";
 
-describe("App component", () => {
-  test("should work as expected", () => {
-    expect(Math.sqrt(4)).toBe(2);
-  });
-  test("renders my app heading correctly", () => {
-    render(<App />);
-    const headingElement = screen.getByText(/my app/i);
-    expect(headingElement).toBeInTheDocument();
-  });
-  test("renders click me button", () => {
-    render(<App />);
-    const clickMeButtonElement = screen.getByText(/Click me!/i);
-    expect(clickMeButtonElement).toBeInTheDocument();
-  });
-  test("renders click me button correctly after click", async () => {
-    render(<App />);
-    const clickMeButtonElement = screen.getByText(/click Me!/i);
-    expect(clickMeButtonElement).toBeInTheDocument();
-    await userEvent.click(clickMeButtonElement);
+// https://testing-library.com/docs/example-react-router/
 
-    expect(screen.getByRole("button")).toHaveTextContent(
-      "Great, you clicked me!"
+describe("App component", () => {
+  test("full app rendering, navigating", async () => {
+    render(<App />, { wrapper: BrowserRouter });
+    const user = userEvent.setup();
+
+    // verify page content for default route
+    // Navbar
+    expect(screen.getByText("Home")).toBeInTheDocument();
+    expect(screen.getByText("Login")).toBeInTheDocument();
+    // HomePage
+    expect(screen.getByText("HomePage")).toBeInTheDocument();
+
+    // verify page content for expected route after navigating
+    // LoginPage
+    await user.click(screen.getByText(/login/i));
+    expect(screen.getByText("LoginPage")).toBeInTheDocument();
+    // Back to HomePage
+    await user.click(screen.getByText(/home/i));
+    expect(screen.getByText("HomePage")).toBeInTheDocument();
+  });
+  test("landing on a bad page", () => {
+    const badRoute = "/some/bad/route";
+
+    // use <MemoryRouter> when you want to manually control the history
+    render(
+      <MemoryRouter initialEntries={[badRoute]}>
+        <App />
+      </MemoryRouter>
     );
-    expect(screen.getByRole("button")).toBeDisabled();
+
+    // verify navigation to Error Page
+    expect(
+      screen.getByText(/Sorry, an unexpected error has occurred./i)
+    ).toBeInTheDocument();
   });
 });
