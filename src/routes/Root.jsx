@@ -1,8 +1,8 @@
 import { Route, Routes, useLocation } from "react-router";
-import NavBar from "./components/navbar/NavBar";
-import ErrorPage from "./routes/ErrorPage";
-import HomePage from "./routes/HomePage";
-import LoginPage from "./routes/LoginPage";
+import NavBar from "../components/navbar/NavBar";
+import ErrorPage from "./ErrorPage";
+import HomePage from "./HomePage";
+import LoginPage from "./LoginPage";
 
 // https://reactrouter.com/en/main
 // used the following instead of the react router docs to test outlet
@@ -14,7 +14,7 @@ export const LocationDisplay = () => {
   return <div data-testid="location-display">{location.pathname}</div>;
 };
 
-const App = () => {
+const Root = () => {
   return (
     <>
       <NavBar />
@@ -28,4 +28,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Root;

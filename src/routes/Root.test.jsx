@@ -4,13 +4,13 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 
-import App from "./App";
+import Root from "./Root";
 
 // https://testing-library.com/docs/example-react-router/
 
-describe("App component", () => {
-  test("full app rendering, navigating", async () => {
-    render(<App />, { wrapper: BrowserRouter });
+describe("Root component", () => {
+  test("Root rendering, navigating", async () => {
+    render(<Root />, { wrapper: BrowserRouter });
     const user = userEvent.setup();
 
     // verify page content for default route
@@ -34,7 +34,7 @@ describe("App component", () => {
     // use <MemoryRouter> when you want to manually control the history
     render(
       <MemoryRouter initialEntries={[badRoute]}>
-        <App />
+        <Root />
       </MemoryRouter>
     );
 
